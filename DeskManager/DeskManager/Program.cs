@@ -1,4 +1,4 @@
-using DeskManager.Services;
+using DeskManager.Utils;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -12,38 +12,27 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Configuration.AddJsonFile("appsettings.json");
 
-var jwtSecret = builder.Configuration["ApplicationSettings:JWT_Secret"];
-
 builder.Services.AddDbContext<ApplicationDbContext>(
     options => options.UseInMemoryDatabase("AppDb"));
+builder.Services.AddSingleton<JwtUtils>();
 
 // Add services to the container.
 
 builder.Services.AddAuthorization();
 
-builder.Services.AddAuthentication(cfg => {
-    cfg.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    cfg.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-    cfg.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(x => {
-    x.RequireHttpsMetadata = false;
-    x.SaveToken = false;
-    x.TokenValidationParameters = new TokenValidationParameters
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
     {
-        ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(
-            Encoding.UTF8
-            .GetBytes(jwtSecret!)
-        ),
-        ValidateIssuer = false,
-        ValidateAudience = false,
-        ClockSkew = TimeSpan.Zero
-    };
-});
-
-
-//builder.Services.AddAuthentication("Bearer").AddJwtBearer();
-
+        options.RequireHttpsMetadata = false;
+        options.SaveToken = true;
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(builder.Configuration["Jwt:Key"])),
+            ValidateIssuer = false,
+            ValidateAudience = false
+        };
+    });
 
 builder.Services.AddControllers();
 builder.Services.AddIdentityApiEndpoints<IdentityUser>()
@@ -67,5 +56,3 @@ app.MapGet("/secret2", () => "This is a different secret!")
     .RequireAuthorization(p => p.RequireClaim("scope", "myapi:secrets"));
 
 app.Run();
-
-app.MapIdentityApi<IdentityUser>();
