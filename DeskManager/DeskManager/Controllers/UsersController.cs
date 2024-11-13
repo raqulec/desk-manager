@@ -6,8 +6,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DeskManager.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("[controller]")]
     public class UsersController : ControllerBase
     {
         private readonly ApplicationDbContext _context;

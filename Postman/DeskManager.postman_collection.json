@@ -1,0 +1,132 @@
+{
+	"info": {
+		"_postman_id": "168a7377-15ba-4056-96d5-10a8d6d77d9a",
+		"name": "DeskManager",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29117740"
+	},
+	"item": [
+		{
+			"name": "https://localhost:7185/weatherforecast",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IktyenlzenRvZlJhayIsInN1YiI6IktyenlzenRvZlJhayIsImp0aSI6IjE3M2Q0MTkiLCJhdWQiOlsiaHR0cDovL2xvY2FsaG9zdDo2MzYwOSIsImh0dHBzOi8vbG9jYWxob3N0OjQ0MzY1IiwiaHR0cDovL2xvY2FsaG9zdDo1MDIyIiwiaHR0cHM6Ly9sb2NhbGhvc3Q6NzE4NSJdLCJuYmYiOjE3MzA5MzA2MzAsImV4cCI6MTczODg3OTQzMCwiaWF0IjoxNzMwOTMwNjMwLCJpc3MiOiJkb3RuZXQtdXNlci1qd3RzIn0.mK0Y-SftaBjQzGWXy8st8ZZK8mL4myR72e2gT5L9ARc",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7185/weatherforecast",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7185",
+					"path": [
+						"weatherforecast"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:7185/register",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"FirstName\": \"Krzysztof\",\r\n    \"LastName\": \"Rak\",\r\n    \"Email\": \"test@test.com\",\r\n    \"Password\":\"password\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7185/Users/register",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7185",
+					"path": [
+						"Users",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:7185/login",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Email\": \"test@test.com\",\r\n    \"Password\":\"password\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7185/Users/login",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7185",
+					"path": [
+						"Users",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:7185/weatherforecast Copy",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6Ik15VGVzdFVzZXIiLCJzdWIiOiJNeVRlc3RVc2VyIiwianRpIjoiODNlYmJkMjYiLCJzY29wZSI6Im15YXBpOnNlY3JldHMiLCJhdWQiOlsiaHR0cDovL2xvY2FsaG9zdDo2MzYwOSIsImh0dHBzOi8vbG9jYWxob3N0OjQ0MzY1IiwiaHR0cDovL2xvY2FsaG9zdDo1MDIyIiwiaHR0cHM6Ly9sb2NhbGhvc3Q6NzE4NSJdLCJuYmYiOjE3MzA5MzE1OTcsImV4cCI6MTczODg4MDM5NywiaWF0IjoxNzMwOTMxNTk3LCJpc3MiOiJkb3RuZXQtdXNlci1qd3RzIn0.lmMjzSlpSD34QO3fvME9q7cKPYs5cP10e5FGcejYTDs",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7185/secret",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7185",
+					"path": [
+						"secret"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
