@@ -22,7 +22,7 @@ namespace DeskManager.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] User request)
         {
-            if(_context.Users.Any(u => u.Email == request.Email))
+            if (_context.Users.Any(u => u.Email == request.Email))
             {
                 return BadRequest(new { message = "Email is already taken" });
             }
@@ -38,7 +38,7 @@ namespace DeskManager.Controllers
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
-            return Ok(new { message = "User registered successfully"});
+            return Ok(new { message = "User registered successfully" });
         }
 
         [HttpPost("login")]
@@ -46,14 +46,24 @@ namespace DeskManager.Controllers
         {
             var existingUser = await _context.Users.SingleOrDefaultAsync(u => u.Email == request.Email);
 
-            if(existingUser == null || !BCrypt.Net.BCrypt.Verify(request.Password, existingUser.Password))
+            if (existingUser == null || !BCrypt.Net.BCrypt.Verify(request.Password, existingUser.Password))
             {
                 return BadRequest(new { message = "Email or password is incorrect" });
             }
 
             var token = _jwtUtils.GenerateJwtToken(existingUser);
 
+            HttpContext.Items.Add("token", token);
+
             return Ok(new { token });
+        }
+
+        [HttpPost("logout")]
+        public IActionResult Logout()
+        {
+            HttpContext.Items.Remove("token");
+
+            return Ok(new { message = "User logged out successfully" });
         }
     }
 }
