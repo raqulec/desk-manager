@@ -1,3 +1,4 @@
+using DeskManager.Models;
 using DeskManager.Utils;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -40,6 +41,23 @@ builder.Services.AddIdentityApiEndpoints<IdentityUser>()
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    dbContext.Database.EnsureCreated();
+    dbContext.Database.Migrate();
+
+    var desk = new Desk
+    {
+        DeskNumber = 1,
+        RoomName = "Conference Room",
+        IsAvailable = true,
+        Reservations = new List<Reservation>()
+    };
+
+    dbContext.Desks.Add(desk);
+    dbContext.SaveChanges();
+}
 // Configure the HTTP request pipeline.
 
 app.UseHttpsRedirection();
