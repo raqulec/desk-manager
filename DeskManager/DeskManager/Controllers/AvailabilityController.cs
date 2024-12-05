@@ -18,6 +18,7 @@ namespace DeskManager.Controllers
             _deskService = deskService;
         }
 
+        //zobezpieczyc - dostep dla zalogowanych
         [HttpGet("GetAllAvailableDesks")]
         public IActionResult GetAllAvailableDesks()
         {
@@ -31,6 +32,7 @@ namespace DeskManager.Controllers
             return Ok(availableDesks);
         }
 
+        //dodac filter inna niz get, POST i w body przekazywac filrt
         [HttpGet("GetAvailableDesksByDate")]
         public ActionResult<List<Desk>> GetAvailableDesksOnDate([FromQuery] DateTime date)
         {

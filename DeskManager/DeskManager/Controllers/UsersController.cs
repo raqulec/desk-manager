@@ -1,4 +1,5 @@
 ﻿using DeskManager.Models;
+using DeskManager.Repository;
 using DeskManager.Utils;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,52 +11,53 @@ namespace DeskManager.Controllers
     [Route("[controller]")]
     public class UsersController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
-        private readonly JwtUtils _jwtUtils;
+        //zmienic warste
+        //w repozytorium polaczenie z baza, repository
+        // w serwisie logika
+        //token zmienic zeby zwracany w headerze
+        
+        private readonly IUserRepository _userRepository;
 
-        public UsersController(ApplicationDbContext context, JwtUtils jwtUtils)
+        public UsersController(IUserRepository userRepository)
         {
-            _context = context;
-            _jwtUtils = jwtUtils;
+            _userRepository = userRepository;
         }
 
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] User request)
         {
-            if (_context.Users.Any(u => u.Email == request.Email))
+            try
             {
-                return BadRequest(new { message = "Email is already taken" });
+                return Ok(await _userRepository.Register(request));
             }
-
-            var user = new User
+            catch (Exception)
             {
-                FirstName = request.FirstName,
-                LastName = request.LastName,
-                Email = request.Email,
-                Password = BCrypt.Net.BCrypt.HashPassword(request.Password)
-            };
-
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
-
-            return Ok(new { message = "User registered successfully" });
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                 "Error retrieving data from the database");
+            }
         }
 
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] Login request)
         {
-            var existingUser = await _context.Users.SingleOrDefaultAsync(u => u.Email == request.Email);
-
-            if (existingUser == null || !BCrypt.Net.BCrypt.Verify(request.Password, existingUser.Password))
+            try
             {
-                return BadRequest(new { message = "Email or password is incorrect" });
+                var token = await _userRepository.Login(request);
+
+                if (string.IsNullOrEmpty(token))
+                {
+                    return BadRequest(new { message = "Invalid email or password" });
+                }
+
+                HttpContext.Items.Add("token", token);
+
+                return Ok(new { token });
             }
-
-            var token = _jwtUtils.GenerateJwtToken(existingUser);
-
-            HttpContext.Items.Add("token", token);
-
-            return Ok(new { token });
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error retrieving data from the database");
+            }
         }
 
         [HttpPost("logout")]

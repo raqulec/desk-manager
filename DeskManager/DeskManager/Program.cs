@@ -1,4 +1,6 @@
 using DeskManager.Models;
+using DeskManager.Repository;
+using DeskManager.Repository.Services;
 using DeskManager.Services;
 using DeskManager.Utils;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -39,8 +41,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddControllers();
 builder.Services.AddIdentityApiEndpoints<IdentityUser>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services.AddHealthChecks();
 
 builder.Services.AddScoped<DeskService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 var app = builder.Build();
 
@@ -310,5 +314,6 @@ app.MapGet("/secret", (ClaimsPrincipal user) => $"Hello {user.Identity?.Name}. M
 
 app.MapGet("/secret2", () => "This is a different secret!")
     .RequireAuthorization(p => p.RequireClaim("scope", "myapi:secrets"));
+app.MapHealthChecks("/health");
 
 app.Run();
