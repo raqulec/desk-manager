@@ -1,18 +1,17 @@
 ﻿using DeskManager.Models;
 using DeskManager.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DeskManager.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class AvailabilityController : ControllerBase
+    public class DesksController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
         private readonly DeskService _deskService;
 
-        public AvailabilityController(ApplicationDbContext context, DeskService deskService)
+        public DesksController(ApplicationDbContext context, DeskService deskService)
         {
             _context = context;
             _deskService = deskService;

@@ -3,21 +3,20 @@ using DeskManager.Utils;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace DeskManager.Repository.Services
+namespace DeskManager.Repository
 {
     public class UserRepository : IUserRepository
     {
         private readonly ApplicationDbContext _dbContext;
 
-        private readonly JwtUtils _jwtUtils;
-
-        public UserRepository(ApplicationDbContext dbContext, JwtUtils jwtUtils)
+        public UserRepository(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
-            _jwtUtils = jwtUtils;
         }
 
-        public async Task<User> Register(User request)
+        //dolozyc walidatory
+
+        public async Task<User> CreateUser(User request)
         {
             if (_dbContext.Users.Any(u => u.Email == request.Email))
             {
@@ -37,7 +36,7 @@ namespace DeskManager.Repository.Services
             return result.Entity;
         }
 
-        public async Task<string> Login(Login request)
+        public async Task<User> AuthenticateUser(Login request)
         {
             var existingUser = await _dbContext.Users.SingleOrDefaultAsync(u => u.Email == request.Email);
 
@@ -46,8 +45,7 @@ namespace DeskManager.Repository.Services
                 throw new InvalidOperationException("Email or password is incorrect");
             }
 
-            var token = _jwtUtils.GenerateJwtToken(existingUser);
-            return token;
+            return existingUser;
         }
     }
 }

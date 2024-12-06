@@ -1,9 +1,6 @@
 ﻿using DeskManager.Models;
-using DeskManager.Repository;
-using DeskManager.Utils;
-using Microsoft.AspNetCore.Http;
+using DeskManager.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace DeskManager.Controllers
 {
@@ -11,16 +8,11 @@ namespace DeskManager.Controllers
     [Route("[controller]")]
     public class UsersController : ControllerBase
     {
-        //zmienic warste
-        //w repozytorium polaczenie z baza, repository
-        // w serwisie logika
-        //token zmienic zeby zwracany w headerze
-        
-        private readonly IUserRepository _userRepository;
+        private readonly IUserService _userService;
 
-        public UsersController(IUserRepository userRepository)
+        public UsersController(IUserService userRepository)
         {
-            _userRepository = userRepository;
+            _userService = userRepository;
         }
 
         [HttpPost("register")]
@@ -28,7 +20,7 @@ namespace DeskManager.Controllers
         {
             try
             {
-                return Ok(await _userRepository.Register(request));
+                return Ok(await _userService.RegisterUser(request));
             }
             catch (Exception)
             {
@@ -42,16 +34,16 @@ namespace DeskManager.Controllers
         {
             try
             {
-                var token = await _userRepository.Login(request);
+                var token = await _userService.LoginUser(request);
 
                 if (string.IsNullOrEmpty(token))
                 {
-                    return BadRequest(new { message = "Invalid email or password" });
+                    return Unauthorized(new { message = "Invalid email or password" });
                 }
 
-                HttpContext.Items.Add("token", token);
+                Response.Headers.Append("Authorization", token);
 
-                return Ok(new { token });
+                return Ok(new { message = "Login successful" });
             }
             catch (Exception)
             {

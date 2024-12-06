@@ -1,11 +1,9 @@
 using DeskManager.Models;
 using DeskManager.Repository;
-using DeskManager.Repository.Services;
 using DeskManager.Services;
 using DeskManager.Utils;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
@@ -45,6 +43,7 @@ builder.Services.AddHealthChecks();
 
 builder.Services.AddScoped<DeskService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 var app = builder.Build();
 

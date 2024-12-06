@@ -1,12 +1,9 @@
 ﻿using DeskManager.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace DeskManager.Services
 {
-    public class DeskService
+    public class DeskService : IDeskService
     {
         private readonly ApplicationDbContext _dbContext;
 
