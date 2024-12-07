@@ -41,7 +41,8 @@ builder.Services.AddIdentityApiEndpoints<IdentityUser>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddHealthChecks();
 
-builder.Services.AddScoped<DeskService>();
+builder.Services.AddScoped<IDeskService, DeskService>();
+builder.Services.AddScoped<IDeskRepository, DeskRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 
@@ -56,7 +57,7 @@ using (var scope = app.Services.CreateScope())
         {
             new Desk
             {
-                DeskId = 1,
+                Id = 1,
                 DeskNumber = 1,
                 RoomName = "Conference Room",
                 IsAvailable = false,
@@ -64,7 +65,7 @@ using (var scope = app.Services.CreateScope())
                 {
                     new Reservation
                     {
-                        ReservationId = 1,
+                        Id = 1,
                         ReservationDate = new DateTime(2024, 11, 1),
                         ReserverName = "John Doe"
                     }
@@ -72,7 +73,7 @@ using (var scope = app.Services.CreateScope())
             },
             new Desk
             {
-                DeskId = 2,
+                Id = 2,
                 DeskNumber = 2,
                 RoomName = "Meeting Room",
                 IsAvailable = false,
@@ -80,7 +81,7 @@ using (var scope = app.Services.CreateScope())
                 {
                     new Reservation
                     {
-                        ReservationId = 2,
+                        Id = 2,
                         ReservationDate = new DateTime(2024, 11, 2),
                         ReserverName = "Jane Smith"
                     }
@@ -88,7 +89,7 @@ using (var scope = app.Services.CreateScope())
             },
             new Desk
             {
-                DeskId = 3,
+                Id = 3,
                 DeskNumber = 3,
                 RoomName = "Office Room",
                 IsAvailable = false,
@@ -96,7 +97,7 @@ using (var scope = app.Services.CreateScope())
                 {
                     new Reservation
                     {
-                        ReservationId = 3,
+                        Id = 3,
                         ReservationDate = new DateTime(2024, 11, 3),
                         ReserverName = "Michael Johnson"
                     }
@@ -104,7 +105,7 @@ using (var scope = app.Services.CreateScope())
             },
             new Desk
             {
-                DeskId = 4,
+                Id = 4,
                 DeskNumber = 4,
                 RoomName = "Board Room",
                 IsAvailable = false,
@@ -112,7 +113,7 @@ using (var scope = app.Services.CreateScope())
                 {
                     new Reservation
                     {
-                        ReservationId = 4,
+                        Id = 4,
                         ReservationDate = new DateTime(2024, 11, 4),
                         ReserverName = "Emily Davis"
                     }
@@ -120,7 +121,7 @@ using (var scope = app.Services.CreateScope())
             },
             new Desk
             {
-                DeskId = 5,
+                Id = 5,
                 DeskNumber = 5,
                 RoomName = "Training Room",
                 IsAvailable = false,
@@ -128,7 +129,7 @@ using (var scope = app.Services.CreateScope())
                 {
                     new Reservation
                     {
-                        ReservationId = 5,
+                        Id = 5,
                         ReservationDate = new DateTime(2024, 11, 5),
                         ReserverName = "David Wilson"
                     }
@@ -136,7 +137,7 @@ using (var scope = app.Services.CreateScope())
             },
             new Desk
             {
-                DeskId = 6,
+                Id = 6,
                 DeskNumber = 6,
                 RoomName = "Break Room",
                 IsAvailable = false,
@@ -144,7 +145,7 @@ using (var scope = app.Services.CreateScope())
                 {
                     new Reservation
                     {
-                        ReservationId = 6,
+                        Id = 6,
                         ReservationDate = new DateTime(2024, 11, 6),
                         ReserverName = "Olivia Martinez"
                     }
@@ -152,7 +153,7 @@ using (var scope = app.Services.CreateScope())
             },
             new Desk
             {
-                DeskId = 7,
+                Id = 7,
                 DeskNumber = 7,
                 RoomName = "Lounge Area",
                 IsAvailable = false,
@@ -160,7 +161,7 @@ using (var scope = app.Services.CreateScope())
                 {
                     new Reservation
                     {
-                        ReservationId = 7,
+                        Id = 7,
                         ReservationDate = new DateTime(2024, 11, 7),
                         ReserverName = "James Anderson"
                     }
@@ -168,7 +169,7 @@ using (var scope = app.Services.CreateScope())
             },
             new Desk
             {
-                DeskId = 8,
+                Id = 8,
                 DeskNumber = 8,
                 RoomName = "Library",
                 IsAvailable = false,
@@ -176,7 +177,7 @@ using (var scope = app.Services.CreateScope())
                 {
                     new Reservation
                     {
-                        ReservationId = 8,
+                        Id = 8,
                         ReservationDate = new DateTime(2024, 11, 8),
                         ReserverName = "Sophia Taylor"
                     }
@@ -184,7 +185,7 @@ using (var scope = app.Services.CreateScope())
             },
             new Desk
             {
-                DeskId = 9,
+                Id = 9,
                 DeskNumber = 9,
                 RoomName = "Studio",
                 IsAvailable = false,
@@ -192,7 +193,7 @@ using (var scope = app.Services.CreateScope())
                 {
                     new Reservation
                     {
-                        ReservationId = 9,
+                        Id = 9,
                         ReservationDate = new DateTime(2024, 11, 9),
                         ReserverName = "Benjamin Thomas"
                     }
@@ -200,7 +201,7 @@ using (var scope = app.Services.CreateScope())
             },
             new Desk
             {
-                DeskId = 10,
+                Id = 10,
                 DeskNumber = 10,
                 RoomName = "Cafeteria",
                 IsAvailable = false,
@@ -208,7 +209,7 @@ using (var scope = app.Services.CreateScope())
                 {
                     new Reservation
                     {
-                        ReservationId = 10,
+                        Id = 10,
                         ReservationDate = new DateTime(2024, 11, 15),
                         ReserverName = "Ava Jackson"
                     }
@@ -216,7 +217,7 @@ using (var scope = app.Services.CreateScope())
             },
             new Desk
             {
-                DeskId = 11,
+                Id = 11,
                 DeskNumber = 11,
                 RoomName = "New Room",
                 IsAvailable = true,
@@ -224,7 +225,7 @@ using (var scope = app.Services.CreateScope())
             },
             new Desk
             {
-                DeskId = 12,
+                Id = 12,
                 DeskNumber = 12,
                 RoomName = "Another Room",
                 IsAvailable = true,
@@ -232,7 +233,7 @@ using (var scope = app.Services.CreateScope())
             },
             new Desk
             {
-                DeskId = 13,
+                Id = 13,
                 DeskNumber = 13,
                 RoomName = "Extra Room",
                 IsAvailable = true,
@@ -240,7 +241,7 @@ using (var scope = app.Services.CreateScope())
             },
             new Desk
             {
-                DeskId = 14,
+                Id = 14,
                 DeskNumber = 14,
                 RoomName = "Additional Room",
                 IsAvailable = true,
@@ -248,7 +249,7 @@ using (var scope = app.Services.CreateScope())
             },
             new Desk
             {
-                DeskId = 15,
+                Id = 15,
                 DeskNumber = 15,
                 RoomName = "Special Room",
                 IsAvailable = true,
@@ -256,7 +257,7 @@ using (var scope = app.Services.CreateScope())
             },
             new Desk
             {
-                DeskId = 16,
+                Id = 16,
                 DeskNumber = 16,
                 RoomName = "Unique Room",
                 IsAvailable = true,
@@ -264,7 +265,7 @@ using (var scope = app.Services.CreateScope())
             },
             new Desk
             {
-                DeskId = 17,
+                Id = 17,
                 DeskNumber = 17,
                 RoomName = "Exclusive Room",
                 IsAvailable = true,
@@ -272,7 +273,7 @@ using (var scope = app.Services.CreateScope())
             },
             new Desk
             {
-                DeskId = 18,
+                Id = 18,
                 DeskNumber = 18,
                 RoomName = "Premium Room",
                 IsAvailable = true,
@@ -280,7 +281,7 @@ using (var scope = app.Services.CreateScope())
             },
             new Desk
             {
-                DeskId = 19,
+                Id = 19,
                 DeskNumber = 19,
                 RoomName = "Deluxe Room",
                 IsAvailable = true,
@@ -288,7 +289,7 @@ using (var scope = app.Services.CreateScope())
             },
             new Desk
             {
-                DeskId = 20,
+                Id = 20,
                 DeskNumber = 20,
                 RoomName = "Luxury Room",
                 IsAvailable = true,

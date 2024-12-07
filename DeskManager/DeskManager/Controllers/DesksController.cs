@@ -1,6 +1,7 @@
 ﻿using DeskManager.Models;
 using DeskManager.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 namespace DeskManager.Controllers
 {
@@ -8,20 +9,18 @@ namespace DeskManager.Controllers
     [Route("[controller]")]
     public class DesksController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
-        private readonly DeskService _deskService;
+        private readonly IDeskService _deskService;
 
-        public DesksController(ApplicationDbContext context, DeskService deskService)
+        public DesksController(IDeskService deskService)
         {
-            _context = context;
             _deskService = deskService;
         }
 
         //zobezpieczyc - dostep dla zalogowanych
-        [HttpGet("GetAllAvailableDesks")]
-        public IActionResult GetAllAvailableDesks()
+        [HttpGet("GetDesks")]
+        public async Task<IActionResult> GetDesksAsync()
         {
-            var availableDesks = _context.Desks.Where(d => d.IsAvailable).ToList();
+            var availableDesks = await _deskService.GetDesksAsync();
 
             if (availableDesks.Count == 0)
             {
@@ -31,13 +30,27 @@ namespace DeskManager.Controllers
             return Ok(availableDesks);
         }
 
-        //dodac filter inna niz get, POST i w body przekazywac filrt
-        [HttpGet("GetAvailableDesksByDate")]
-        public ActionResult<List<Desk>> GetAvailableDesksOnDate([FromQuery] DateTime date)
+        public async Task<IActionResult> AddDesksAsync([FromBody] List<Desk> desks)
         {
-            var desks = _deskService.GetAvailableDesksOnDate(date);
-
-            return Ok(desks);
+            try
+            {
+                await _deskService.AddDesksAsync(desks);
+                return Ok("Desks added successfully.");
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                                    "Error retrieving data from the database");
+            }
         }
+
+        //dodac filter inna niz get, POST i w body przekazywac filrt
+        //[HttpGet("GetAvailableDesksByDate")]
+        //public ActionResult<List<Desk>> GetAvailableDesksOnDate([FromQuery] DateTime date)
+        //{
+        //    var desks = _deskService.GetAvailableDesksOnDate(date);
+
+        //    return Ok(desks);
+        //}
     }
 }
