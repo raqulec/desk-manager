@@ -7,36 +7,7 @@
 	},
 	"item": [
 		{
-			"name": "https://localhost:7185/weatherforecast",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IktyenlzenRvZlJhayIsInN1YiI6IktyenlzenRvZlJhayIsImp0aSI6IjE3M2Q0MTkiLCJhdWQiOlsiaHR0cDovL2xvY2FsaG9zdDo2MzYwOSIsImh0dHBzOi8vbG9jYWxob3N0OjQ0MzY1IiwiaHR0cDovL2xvY2FsaG9zdDo1MDIyIiwiaHR0cHM6Ly9sb2NhbGhvc3Q6NzE4NSJdLCJuYmYiOjE3MzA5MzA2MzAsImV4cCI6MTczODg3OTQzMCwiaWF0IjoxNzMwOTMwNjMwLCJpc3MiOiJkb3RuZXQtdXNlci1qd3RzIn0.mK0Y-SftaBjQzGWXy8st8ZZK8mL4myR72e2gT5L9ARc",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "https://localhost:7185/weatherforecast",
-					"protocol": "https",
-					"host": [
-						"localhost"
-					],
-					"port": "7185",
-					"path": [
-						"weatherforecast"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "https://localhost:7185/register",
+			"name": "https://localhost:7185/Users/register",
 			"request": {
 				"auth": {
 					"type": "noauth"
@@ -68,7 +39,7 @@
 			"response": []
 		},
 		{
-			"name": "https://localhost:7185/login",
+			"name": "https://localhost:7185/Users/login",
 			"request": {
 				"auth": {
 					"type": "noauth"
@@ -100,29 +71,119 @@
 			"response": []
 		},
 		{
-			"name": "https://localhost:7185/weatherforecast Copy",
+			"name": "https://localhost:7185/desks/get-desks",
 			"request": {
 				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6Ik15VGVzdFVzZXIiLCJzdWIiOiJNeVRlc3RVc2VyIiwianRpIjoiODNlYmJkMjYiLCJzY29wZSI6Im15YXBpOnNlY3JldHMiLCJhdWQiOlsiaHR0cDovL2xvY2FsaG9zdDo2MzYwOSIsImh0dHBzOi8vbG9jYWxob3N0OjQ0MzY1IiwiaHR0cDovL2xvY2FsaG9zdDo1MDIyIiwiaHR0cHM6Ly9sb2NhbGhvc3Q6NzE4NSJdLCJuYmYiOjE3MzA5MzE1OTcsImV4cCI6MTczODg4MDM5NywiaWF0IjoxNzMwOTMxNTk3LCJpc3MiOiJkb3RuZXQtdXNlci1qd3RzIn0.lmMjzSlpSD34QO3fvME9q7cKPYs5cP10e5FGcejYTDs",
-							"type": "string"
-						}
-					]
+					"type": "noauth"
 				},
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://localhost:7185/secret",
+					"raw": "https://localhost:7185/desks/get-desks",
 					"protocol": "https",
 					"host": [
 						"localhost"
 					],
 					"port": "7185",
 					"path": [
-						"secret"
+						"desks",
+						"get-desks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:7185/desks/get-desks Copy",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n        \"deskNumber\": 1,\r\n        \"roomName\": \"Room A\"\r\n    },\r\n    {\r\n        \"deskNumber\": 2,\r\n        \"roomName\": \"Room A\"\r\n    },\r\n    {\r\n        \"deskNumber\": 3,\r\n        \"roomName\": \"Room B\"\r\n    },\r\n    {\r\n        \"deskNumber\": 4,\r\n        \"roomName\": \"Room B\"\r\n    },\r\n    {\r\n        \"deskNumber\": 5,\r\n        \"roomName\": \"Room C\"\r\n    }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7185/desks/add-desks",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7185",
+					"path": [
+						"desks",
+						"add-desks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:7185/desks/delete-desks",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n        \"deskNumber\": 4,\r\n        \"roomName\": \"Room B\"\r\n    },\r\n    {\r\n        \"deskNumber\": 5,\r\n        \"roomName\": \"Room C\"\r\n    }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7185/desks/delete-desks",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7185",
+					"path": [
+						"desks",
+						"delete-desks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:7185/Users/logout",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7185/Users/logout",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7185",
+					"path": [
+						"Users",
+						"logout"
 					]
 				}
 			},

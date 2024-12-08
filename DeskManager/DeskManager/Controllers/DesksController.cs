@@ -1,12 +1,11 @@
 ﻿using DeskManager.Models;
 using DeskManager.Services;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
 
 namespace DeskManager.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("desks")]
     public class DesksController : ControllerBase
     {
         private readonly IDeskService _deskService;
@@ -17,7 +16,7 @@ namespace DeskManager.Controllers
         }
 
         //zobezpieczyc - dostep dla zalogowanych
-        [HttpGet("GetDesks")]
+        [HttpGet("get-desks")]
         public async Task<IActionResult> GetDesksAsync()
         {
             var availableDesks = await _deskService.GetDesksAsync();
@@ -30,12 +29,48 @@ namespace DeskManager.Controllers
             return Ok(availableDesks);
         }
 
+        [HttpPost("add-desks")]
         public async Task<IActionResult> AddDesksAsync([FromBody] List<Desk> desks)
         {
+            var existingDesks = await _deskService.GetDesksAsync();
+
+            foreach (var desk in desks)
+            {
+                if (existingDesks.Any(d => d.DeskNumber == desk.DeskNumber && d.RoomName == desk.RoomName))
+                {
+                    return BadRequest($"Desk with Desk Number: {desk.DeskNumber} and Room Name: {desk.RoomName} already exists.");
+                }
+            }
+
             try
             {
                 await _deskService.AddDesksAsync(desks);
                 return Ok("Desks added successfully.");
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                                    "Error retrieving data from the database");
+            }
+        }
+
+        [HttpDelete("delete-desks")]
+        public async Task<IActionResult> DeleteDesksAsync([FromBody] List<Desk> desks)
+        {
+            var existingDesks = await _deskService.GetDesksAsync();
+
+            foreach (var desk in desks)
+            {
+                if (!existingDesks.Any(d => d.DeskNumber == desk.DeskNumber && d.RoomName == desk.RoomName))
+                {
+                    return BadRequest($"Desk with Desk Number: {desk.DeskNumber} and Room Name: {desk.RoomName} does not exist.");
+                }
+            }
+
+            try
+            {
+                await _deskService.DeleteDesksAsync(desks);
+                return Ok("Desks deleted successfully.");
             }
             catch (Exception)
             {

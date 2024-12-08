@@ -25,6 +25,11 @@ namespace DeskManager.Services
             await _deskRepository.AddDesksAsync(desks);
         }
 
+        public async Task DeleteDesksAsync(List<Desk> desks)
+        {
+            await _deskRepository.DeleteDesksAsync(desks);
+        }
+
         //public List<Desk> GetAvailableDesksOnDate(DateTime date)
         //{
         //    var availableDesks = _dbContext.Desks
