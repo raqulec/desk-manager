@@ -31,24 +31,37 @@ namespace DeskManager.Repository
             await _dbContext.SaveChangesAsync();
         }
 
-        //przetestowac ponownie delete gdy bede mial polacznie z baza inne niz in memory
         public async Task DeleteDesksAsync(List<Desk> desks)
         {
-            var desksToRemove = new List<Desk>();
-            foreach (var desk in desks)
+            using var transaction = await _dbContext.Database.BeginTransactionAsync();
+            try
             {
-                if (await _dbContext.Desks.AnyAsync(d => d.DeskNumber == desk.DeskNumber && d.RoomName == desk.RoomName))
+                var desksToRemove = new List<Desk>();
+                foreach (var desk in desks)
                 {
-                    desksToRemove.Add(desk);
+                    var existingDesk = await _dbContext.Desks
+                        .FirstOrDefaultAsync(d => d.DeskNumber == desk.DeskNumber && d.RoomName == desk.RoomName);
+
+                    if (existingDesk != null)
+                    {
+                        desksToRemove.Add(existingDesk);
+                    }
+                    else
+                    {
+                        throw new Exception($"Desk with Desk Number: {desk.DeskNumber} and Room Name: {desk.RoomName} does not exist.");
+                    }
                 }
-                else
-                {
-                    throw new Exception($"Desk with Desk Number: {desk.DeskNumber} and Room Name: {desk.RoomName} does not exist.");
-                }
+
+                _dbContext.Desks.RemoveRange(desksToRemove);
+                await _dbContext.SaveChangesAsync();
+
+                await transaction.CommitAsync();
             }
-            _dbContext.Desks.AttachRange(desksToRemove);
-            _dbContext.Desks.RemoveRange(desksToRemove);
-            await _dbContext.SaveChangesAsync();
+            catch
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
         }
     }
 }

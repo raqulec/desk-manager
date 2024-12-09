@@ -4,7 +4,7 @@ namespace DeskManager.Repository
 {
     public interface IUserRepository
     {
-        Task<User> CreateUser(User request);
-        Task<User> AuthenticateUser(Login request);
+        Task<User> AddUser(User user);
+        Task<User?> GetUserByEmail(string email);
     }
 }

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace DeskManager.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("users")]
     public class UsersController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -20,7 +20,7 @@ namespace DeskManager.Controllers
         {
             try
             {
-                return Ok(await _userService.RegisterUser(request));
+                return Ok(await _userService.CreateUser(request));
             }
             catch (Exception)
             {
@@ -34,7 +34,7 @@ namespace DeskManager.Controllers
         {
             try
             {
-                var token = await _userService.LoginUser(request);
+                var token = await _userService.AuthenticateUser(request);
 
                 if (string.IsNullOrEmpty(token))
                 {

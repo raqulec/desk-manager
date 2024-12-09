@@ -4,7 +4,7 @@ namespace DeskManager.Services
 {
     public interface IUserService
     {
-        Task<User> RegisterUser(User request);
-        Task<string> LoginUser(Login request);
+        Task<User> CreateUser(User request);
+        Task<string> AuthenticateUser(Login request);
     }
 }

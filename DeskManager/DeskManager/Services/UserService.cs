@@ -15,14 +15,34 @@ namespace DeskManager.Services
             _jwtUtils = jwtUtils;
         }
 
-        public async Task<User> RegisterUser(User request)
+        public async Task<User> CreateUser(User request)
         {
-            return await _userRepository.CreateUser(request);
+            var existingUser = await _userRepository.GetUserByEmail(request.Email);
+
+            if (existingUser != null)
+            {
+                throw new InvalidOperationException("Email is already taken");
+            }
+
+            var user = new User
+            {
+                FirstName = request.FirstName,
+                LastName = request.LastName,
+                Email = request.Email,
+                Password = BCrypt.Net.BCrypt.HashPassword(request.Password)
+            };
+
+            return await _userRepository.AddUser(user);
         }
 
-        public async Task<string> LoginUser(Login request)
+        public async Task<string> AuthenticateUser(Login request)
         {
-            var user = await _userRepository.AuthenticateUser(request);
+            var user = await _userRepository.GetUserByEmail(request.Email);
+
+            if (user == null || !BCrypt.Net.BCrypt.Verify(request.Password, user.Password))
+            {
+                throw new InvalidOperationException("Email or password is incorrect");
+            }
 
             var token = _jwtUtils.GenerateJwtToken(user);
             return token;

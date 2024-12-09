@@ -5,6 +5,7 @@ using DeskManager.Utils;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using System.Text;
@@ -14,8 +15,14 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Configuration.AddJsonFile("appsettings.json");
 
-builder.Services.AddDbContext<ApplicationDbContext>(
-    options => options.UseInMemoryDatabase("AppDb"));
+//Transactions are not supported by the in-memory store.
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+{
+    options.UseInMemoryDatabase("AppDb");
+    options.ConfigureWarnings(warnings =>
+        warnings.Ignore(InMemoryEventId.TransactionIgnoredWarning));
+});
+
 builder.Services.AddSingleton<JwtUtils>();
 
 // Add services to the container.
