@@ -23,6 +23,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
         warnings.Ignore(InMemoryEventId.TransactionIgnoredWarning));
 });
 
+builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddSingleton<JwtUtils>();
 
 // Add services to the container.
@@ -67,7 +68,7 @@ using (var scope = app.Services.CreateScope())
                 Id = 1,
                 DeskNumber = 1,
                 RoomName = "Conference Room",
-                IsAvailable = false,
+                IsAvailable = true,
                 Reservations = new List<Reservation>()
                 {
                     new Reservation
@@ -83,7 +84,7 @@ using (var scope = app.Services.CreateScope())
                 Id = 2,
                 DeskNumber = 2,
                 RoomName = "Meeting Room",
-                IsAvailable = false,
+                IsAvailable = true,
                 Reservations = new List<Reservation>()
                 {
                     new Reservation
@@ -99,7 +100,7 @@ using (var scope = app.Services.CreateScope())
                 Id = 3,
                 DeskNumber = 3,
                 RoomName = "Office Room",
-                IsAvailable = false,
+                IsAvailable = true,
                 Reservations = new List<Reservation>()
                 {
                     new Reservation
@@ -115,7 +116,7 @@ using (var scope = app.Services.CreateScope())
                 Id = 4,
                 DeskNumber = 4,
                 RoomName = "Board Room",
-                IsAvailable = false,
+                IsAvailable = true,
                 Reservations = new List<Reservation>()
                 {
                     new Reservation
@@ -131,7 +132,7 @@ using (var scope = app.Services.CreateScope())
                 Id = 5,
                 DeskNumber = 5,
                 RoomName = "Training Room",
-                IsAvailable = false,
+                IsAvailable = true,
                 Reservations = new List<Reservation>()
                 {
                     new Reservation

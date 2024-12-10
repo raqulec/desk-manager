@@ -1,4 +1,6 @@
-﻿using DeskManager.Models;
+﻿using AutoMapper;
+using DeskManager.Models;
+using DeskManager.Models.DTO;
 using DeskManager.Repository;
 
 namespace DeskManager.Services
@@ -6,17 +8,19 @@ namespace DeskManager.Services
     public class DeskService : IDeskService
     {
         private readonly IDeskRepository _deskRepository;
+        private readonly IMapper _mapper;
 
-        public DeskService(IDeskRepository deskRepository)
+        public DeskService(IDeskRepository deskRepository, IMapper mapper)
         {
             _deskRepository = deskRepository;
+            _mapper = mapper;
         }
 
-        public async Task<List<Desk>> GetDesksAsync()
+        public async Task<List<DeskDto>> GetDesksAsync()
         {
-            var availableDesks = _deskRepository.GetDesksAsync();
+            var desks = await _deskRepository.GetDesksAsync();
 
-            return await availableDesks;
+            return _mapper.Map<List<DeskDto>>(desks);
         }
 
         public async Task AddDesksAsync(List<Desk> desks)

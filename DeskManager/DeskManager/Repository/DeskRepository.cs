@@ -14,8 +14,10 @@ namespace DeskManager.Repository
 
         public async Task<List<Desk>> GetDesksAsync()
         {
-            var availableDesks = await _dbContext.Desks.ToListAsync();
-            return availableDesks;
+            var desks = await _dbContext.Desks
+                .Include(d => d.Reservations)
+                .ToListAsync();
+            return desks;
         }
 
         public async Task AddDesksAsync(List<Desk> desks)
