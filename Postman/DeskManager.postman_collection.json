@@ -158,6 +158,70 @@
 			"response": []
 		},
 		{
+			"name": "https://localhost:7185/desks/update-desks",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n        \"id\": 1,\r\n        \"deskNumber\": 1,\r\n        \"roomName\": \"Conference Room TEST\"\r\n    },\r\n    {\r\n        \"id\": 2,\r\n        \"deskNumber\": 2,\r\n        \"roomName\": \"Meeting Room TEST\"\r\n    }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7185/desks/update-desks",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7185",
+					"path": [
+						"desks",
+						"update-desks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://localhost:7185/desks/get-desks-by-filter",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"RoomName\": \"Conference Room\",\r\n    \"ReservedBy\": \"John Doe\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7185/desks/get-desks-by-filter",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7185",
+					"path": [
+						"desks",
+						"get-desks-by-filter"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "https://localhost:7185/users/logout",
 			"request": {
 				"auth": {

@@ -21,7 +21,7 @@ namespace DeskManager.Services
 
             if (existingUser != null)
             {
-                throw new InvalidOperationException("Email is already taken");
+                throw new ArgumentException("Email is already taken");
             }
 
             var user = new User
@@ -41,7 +41,7 @@ namespace DeskManager.Services
 
             if (user == null || !BCrypt.Net.BCrypt.Verify(request.Password, user.Password))
             {
-                throw new InvalidOperationException("Email or password is incorrect");
+                throw new ArgumentException("Email or password is incorrect");
             }
 
             var token = _jwtUtils.GenerateJwtToken(user);

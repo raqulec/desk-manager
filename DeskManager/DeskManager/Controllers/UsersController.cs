@@ -22,10 +22,13 @@ namespace DeskManager.Controllers
             {
                 return Ok(await _userService.CreateUser(request));
             }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                 "Error retrieving data from the database");
+                return StatusCode(500, "An unexpected error occurred.");
             }
         }
 
@@ -45,10 +48,13 @@ namespace DeskManager.Controllers
 
                 return Ok(new { message = "Login successful" });
             }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                    "Error retrieving data from the database");
+                return StatusCode(500, "An unexpected error occurred.");
             }
         }
 

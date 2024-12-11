@@ -8,5 +8,7 @@ namespace DeskManager.Services
         Task<List<DeskDto>> GetDesksAsync();
         Task AddDesksAsync(List<Desk> desks);
         Task DeleteDesksAsync(List<Desk> desks);
+        Task UpdateDesksAsync(List<Desk> desks);
+        Task<List<DeskDto>> GetDesksByFilter(DeskFilter filter);
     }
 }

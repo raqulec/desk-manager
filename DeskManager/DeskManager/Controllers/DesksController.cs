@@ -32,60 +32,77 @@ namespace DeskManager.Controllers
         [HttpPost("add-desks")]
         public async Task<IActionResult> AddDesksAsync([FromBody] List<Desk> desks)
         {
-            var existingDesks = await _deskService.GetDesksAsync();
-
-            foreach (var desk in desks)
-            {
-                if (existingDesks.Any(d => d.DeskNumber == desk.DeskNumber && d.RoomName == desk.RoomName))
-                {
-                    return BadRequest($"Desk with Desk Number: {desk.DeskNumber} and Room Name: {desk.RoomName} already exists.");
-                }
-            }
-
             try
             {
                 await _deskService.AddDesksAsync(desks);
                 return Ok("Desks added successfully.");
             }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                                    "Error retrieving data from the database");
+                return StatusCode(500, "An unexpected error occurred.");
             }
         }
 
         [HttpDelete("delete-desks")]
         public async Task<IActionResult> DeleteDesksAsync([FromBody] List<Desk> desks)
         {
-            var existingDesks = await _deskService.GetDesksAsync();
-
-            foreach (var desk in desks)
-            {
-                if (!existingDesks.Any(d => d.DeskNumber == desk.DeskNumber && d.RoomName == desk.RoomName))
-                {
-                    return BadRequest($"Desk with Desk Number: {desk.DeskNumber} and Room Name: {desk.RoomName} does not exist.");
-                }
-            }
-
             try
             {
                 await _deskService.DeleteDesksAsync(desks);
                 return Ok("Desks deleted successfully.");
             }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                                    "Error retrieving data from the database");
+                return StatusCode(500, "An unexpected error occurred.");
             }
         }
 
-        //dodac filter inna niz get, POST i w body przekazywac filrt
-        //[HttpGet("GetAvailableDesksByDate")]
-        //public ActionResult<List<Desk>> GetAvailableDesksOnDate([FromQuery] DateTime date)
-        //{
-        //    var desks = _deskService.GetAvailableDesksOnDate(date);
+        [HttpPut("update-desks")]
+        public async Task<IActionResult> UpdateDesksAsync([FromBody] List<Desk> desks)
+        {
+            try
+            {
+                await _deskService.UpdateDesksAsync(desks);
+                return Ok("Desks updated successfully.");
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "An unexpected error occurred.");
+            }
+        }
 
-        //    return Ok(desks);
-        //}
+        [HttpPost("get-desks-by-filter")]
+        public async Task<IActionResult> GetDesksByFilter([FromBody] DeskFilter filter)
+        {
+            try
+            {
+                var desks = await _deskService.GetDesksByFilter(filter);
+
+                if (!desks.Any())
+                    return NotFound("No desks found.");
+
+                return Ok(desks);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, "An unexpected error occurred:");
+            }
+        }
     }
 }
