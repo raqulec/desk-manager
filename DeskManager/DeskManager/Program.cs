@@ -66,82 +66,82 @@ using (var scope = app.Services.CreateScope())
             new Desk
             {
                 Id = 1,
-                DeskNumber = 1,
+                DeskNumber = "1",
                 RoomName = "Conference Room",
-                IsAvailable = true,
-                Reservations = new List<Reservation>()
-                {
-                    new Reservation
-                    {
-                        Id = 1,
-                        ReservationDate = new DateTime(2024, 11, 1),
-                        ReservedBy = "John Doe"
-                    }
-                }
+                //IsAvailable = true,
+                //Reservations = new List<Reservation>()
+                //{
+                //    new Reservation
+                //    {
+                //        Id = 1,
+                //        ReservationDate = new DateTime(2024, 11, 1),
+                //        ReservedBy = "John Doe"
+                //    }
+                //}
             },
             new Desk
             {
                 Id = 2,
-                DeskNumber = 2,
+                DeskNumber = "2",
                 RoomName = "Meeting Room",
-                IsAvailable = true,
-                Reservations = new List<Reservation>()
-                {
-                    new Reservation
-                    {
-                        Id = 2,
-                        ReservationDate = new DateTime(2024, 11, 2),
-                        ReservedBy = "Jane Smith"
-                    }
-                }
+                //IsAvailable = true,
+                //Reservations = new List<Reservation>()
+                //{
+                //    new Reservation
+                //    {
+                //        Id = 2,
+                //        ReservationDate = new DateTime(2024, 11, 2),
+                //        ReservedBy = "Jane Smith"
+                //    }
+                //}
             },
             new Desk
             {
                 Id = 3,
-                DeskNumber = 3,
+                DeskNumber = "3",
                 RoomName = "Office Room",
-                IsAvailable = true,
-                Reservations = new List<Reservation>()
-                {
-                    new Reservation
-                    {
-                        Id = 3,
-                        ReservationDate = new DateTime(2024, 11, 3),
-                        ReservedBy = "Michael Johnson"
-                    }
-                }
+                //IsAvailable = true,
+                //Reservations = new List<Reservation>()
+                //{
+                //    new Reservation
+                //    {
+                //        Id = 3,
+                //        ReservationDate = new DateTime(2024, 11, 3),
+                //        ReservedBy = "Michael Johnson"
+                //    }
+                //}
             },
             new Desk
             {
                 Id = 4,
-                DeskNumber = 4,
+                DeskNumber = "4",
                 RoomName = "Board Room",
-                IsAvailable = true,
-                Reservations = new List<Reservation>()
-                {
-                    new Reservation
-                    {
-                        Id = 4,
-                        ReservationDate = new DateTime(2024, 11, 4),
-                        ReservedBy = "Emily Davis"
-                    }
-                }
+                //IsAvailable = true,
+                //Reservations = new List<Reservation>()
+                //{
+                //    new Reservation
+                //    {
+                //        Id = 4,
+                //        ReservationDate = new DateTime(2024, 11, 4),
+                //        ReservedBy = "Emily Davis"
+                //    }
+                //}
             },
             new Desk
             {
                 Id = 5,
-                DeskNumber = 5,
+                DeskNumber = "5",
                 RoomName = "Training Room",
-                IsAvailable = true,
-                Reservations = new List<Reservation>()
-                {
-                    new Reservation
-                    {
-                        Id = 5,
-                        ReservationDate = new DateTime(2024, 11, 5),
-                        ReservedBy = "David Wilson"
-                    }
-                }
+                //IsAvailable = true,
+                //Reservations = new List<Reservation>()
+                //{
+                //    new Reservation
+                //    {
+                //        Id = 5,
+                //        ReservationDate = new DateTime(2024, 11, 5),
+                //        ReservedBy = "David Wilson"
+                //    }
+                //}
             }
         };
 

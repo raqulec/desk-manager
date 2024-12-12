@@ -7,5 +7,6 @@
         public string ReservedBy { get; set; } = string.Empty;
         public int DeskId { get; set; }
         public Desk? Desk { get; set; }
+        public bool IsAvailable { get; set; }
     }
 }

@@ -65,5 +65,8 @@ namespace DeskManager.Controllers
 
             return Ok(new { message = "User logged out successfully" });
         }
+
+
+        //dodac walidacje, zmienic obsluge exceptionow, przeniesc id, poczytac o dobrych praktykach REST, sprawdzac jeszcze raz co poszczegolne endpointy zwracaja, jak zwracamy biurka to bez rezerwacji, jak jest rezerwacja to oddzielny enopoint, wrocic do kursu zobaczyc obsluge exceptionow
     }
 }

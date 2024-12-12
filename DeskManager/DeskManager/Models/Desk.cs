@@ -3,9 +3,7 @@
     public class Desk
     {
         public int Id { get; set; }
-        public int DeskNumber { get; set; }
+        public string DeskNumber { get; set; } = string.Empty;
         public string RoomName { get; set; } = string.Empty;
-        public bool IsAvailable { get; set; }
-        public ICollection<Reservation> Reservations { get; set; } = [];
     }
 }

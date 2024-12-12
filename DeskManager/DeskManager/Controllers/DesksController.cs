@@ -47,12 +47,30 @@ namespace DeskManager.Controllers
             }
         }
 
+        //[HttpDelete("delete-desks")]
+        //public async Task<IActionResult> DeleteDesksAsync([FromBody] List<Desk> desks)
+        //{
+        //    try
+        //    {
+        //        await _deskService.DeleteDesksAsync(desks);
+        //        return Ok("Desks deleted successfully.");
+        //    }
+        //    catch (ArgumentException ex)
+        //    {
+        //        return BadRequest(ex.Message);
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return StatusCode(500, "An unexpected error occurred.");
+        //    }
+        //}
+
         [HttpDelete("delete-desks")]
-        public async Task<IActionResult> DeleteDesksAsync([FromBody] List<Desk> desks)
+        public async Task<IActionResult> DeleteDesksAsync([FromQuery] int deskId)
         {
             try
             {
-                await _deskService.DeleteDesksAsync(desks);
+                await _deskService.DeleteDesksAsync(deskId);
                 return Ok("Desks deleted successfully.");
             }
             catch (ArgumentException ex)

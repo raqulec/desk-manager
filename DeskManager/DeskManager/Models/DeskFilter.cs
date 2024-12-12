@@ -2,10 +2,10 @@
 {
     public class DeskFilter
     {
-        public int? DeskNumber { get; set; }
-        public string? RoomName { get; set; }
-        public bool? IsAvailable { get; set; }
-        public string? ReservedBy { get; set; }
+        public string DeskNumber { get; set; } = string.Empty;
+        public string RoomName { get; set; } = string.Empty;
+        public bool IsAvailable { get; set; } = false;
+        public string ReservedBy { get; set; } = string.Empty;
         public DateTime? ReservationDate { get; set; }
     }
 }

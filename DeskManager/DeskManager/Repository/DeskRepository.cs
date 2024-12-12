@@ -15,7 +15,6 @@ namespace DeskManager.Repository
         public async Task<List<Desk>> GetDesksAsync()
         {
             var desks = await _dbContext.Desks
-                .Include(d => d.Reservations)
                 .ToListAsync();
             return desks;
         }
@@ -33,28 +32,20 @@ namespace DeskManager.Repository
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task DeleteDesksAsync(List<Desk> desks)
+        public async Task DeleteDesksAsync(int deskId)
         {
             using var transaction = await _dbContext.Database.BeginTransactionAsync();
             try
             {
-                var desksToRemove = new List<Desk>();
-                foreach (var desk in desks)
-                {
-                    var existingDesk = await _dbContext.Desks
-                        .FirstOrDefaultAsync(d => d.DeskNumber == desk.DeskNumber && d.RoomName == desk.RoomName);
+                var existingDesk = await _dbContext.Desks
+                        .FirstOrDefaultAsync(d => d.Id == deskId);
 
-                    if (existingDesk != null)
-                    {
-                        desksToRemove.Add(existingDesk);
-                    }
-                    else
-                    {
-                        throw new Exception($"Desk with Desk Number: {desk.DeskNumber} and Room Name: {desk.RoomName} does not exist.");
-                    }
+                if (existingDesk == null)
+                {
+                    throw new Exception($"Desk with Id: {deskId} does not exist.");
                 }
 
-                _dbContext.Desks.RemoveRange(desksToRemove);
+                _dbContext.Desks.Remove(existingDesk);
                 await _dbContext.SaveChangesAsync();
 
                 await transaction.CommitAsync();
@@ -99,32 +90,16 @@ namespace DeskManager.Repository
         public async Task<List<Desk>> GetDesksByFilter(DeskFilter filter)
         {
             var query = _dbContext.Set<Desk>()
-                .Include(d => d.Reservations)
                 .AsQueryable();
 
-            foreach (var property in typeof(DeskFilter).GetProperties())
+            if (!string.IsNullOrEmpty(filter.DeskNumber))
             {
-                var value = property.GetValue(filter);
-                if (value == null) continue;
+                query = query.Where(d => d.DeskNumber == filter.DeskNumber);
+            }
 
-                switch (property.Name)
-                {
-                    case nameof(DeskFilter.DeskNumber):
-                        query = query.Where(d => d.DeskNumber == (int)value);
-                        break;
-                    case nameof(DeskFilter.RoomName):
-                        query = query.Where(d => d.RoomName.Contains((string)value));
-                        break;
-                    case nameof(DeskFilter.IsAvailable):
-                        query = query.Where(d => d.IsAvailable == (bool)value);
-                        break;
-                    case nameof(DeskFilter.ReservedBy):
-                        query = query.Where(d => d.Reservations.Any(r => r.ReservedBy.Contains((string)value)));
-                        break;
-                    case nameof(DeskFilter.ReservationDate):
-                        query = query.Where(d => d.Reservations.Any(r => r.ReservationDate.Date == ((DateTime)value).Date));
-                        break;
-                }
+            if (!string.IsNullOrEmpty(filter.RoomName))
+            {
+                query = query.Where(d => d.RoomName == filter.RoomName);
             }
 
             return await query.ToListAsync();

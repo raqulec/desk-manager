@@ -37,19 +37,16 @@ namespace DeskManager.Services
             await _deskRepository.AddDesksAsync(desks);
         }
 
-        public async Task DeleteDesksAsync(List<Desk> desks)
+        public async Task DeleteDesksAsync(int deskId)
         {
             var existingDesks = await GetDesksAsync();
 
-            foreach (var desk in desks)
+            if (!existingDesks.Any(d => d.Id == deskId))
             {
-                if (!existingDesks.Any(d => d.DeskNumber == desk.DeskNumber && d.RoomName == desk.RoomName))
-                {
-                    throw new ArgumentException($"Desk with Desk Number: {desk.DeskNumber} and Room Name: {desk.RoomName} does not exist.");
-                }
+                throw new ArgumentException($"Desk with Id: {deskId} does not exist.");
             }
 
-            await _deskRepository.DeleteDesksAsync(desks);
+            await _deskRepository.DeleteDesksAsync(deskId);
         }
 
         public async Task UpdateDesksAsync(List<Desk> desks)
