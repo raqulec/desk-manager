@@ -12,8 +12,6 @@ namespace DeskManager.Repository
             _dbContext = dbContext;
         }
 
-        //dolozyc walidatory
-
         public async Task<User> AddUser(User user)
         {
             var result = await _dbContext.Users.AddAsync(user);

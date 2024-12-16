@@ -24,15 +24,14 @@
 					}
 				},
 				"url": {
-					"raw": "https://localhost:7185/users/register",
+					"raw": "https://localhost:7185/users",
 					"protocol": "https",
 					"host": [
 						"localhost"
 					],
 					"port": "7185",
 					"path": [
-						"users",
-						"register"
+						"users"
 					]
 				}
 			},
@@ -56,15 +55,14 @@
 					}
 				},
 				"url": {
-					"raw": "https://localhost:7185/users/login",
+					"raw": "https://localhost:7185/sessions",
 					"protocol": "https",
 					"host": [
 						"localhost"
 					],
 					"port": "7185",
 					"path": [
-						"users",
-						"login"
+						"sessions"
 					]
 				}
 			},
@@ -222,38 +220,6 @@
 					"path": [
 						"desks",
 						"get-desks-by-filter"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "https://localhost:7185/users/logout",
-			"request": {
-				"auth": {
-					"type": "noauth"
-				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "https://localhost:7185/users/logout",
-					"protocol": "https",
-					"host": [
-						"localhost"
-					],
-					"port": "7185",
-					"path": [
-						"users",
-						"logout"
 					]
 				}
 			},
