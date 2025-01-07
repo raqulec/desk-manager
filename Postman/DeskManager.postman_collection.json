@@ -77,15 +77,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://localhost:7185/desks/get-desks",
+					"raw": "https://localhost:7185/desks",
 					"protocol": "https",
 					"host": [
 						"localhost"
 					],
 					"port": "7185",
 					"path": [
-						"desks",
-						"get-desks"
+						"desks"
 					]
 				}
 			},
@@ -109,15 +108,14 @@
 					}
 				},
 				"url": {
-					"raw": "https://localhost:7185/desks/add-desks",
+					"raw": "https://localhost:7185/desks",
 					"protocol": "https",
 					"host": [
 						"localhost"
 					],
 					"port": "7185",
 					"path": [
-						"desks",
-						"add-desks"
+						"desks"
 					]
 				}
 			},
@@ -141,15 +139,14 @@
 					}
 				},
 				"url": {
-					"raw": "https://localhost:7185/desks/delete-desks?deskId=1",
+					"raw": "https://localhost:7185/desks?deskId=1",
 					"protocol": "https",
 					"host": [
 						"localhost"
 					],
 					"port": "7185",
 					"path": [
-						"desks",
-						"delete-desks"
+						"desks"
 					],
 					"query": [
 						{
@@ -179,15 +176,14 @@
 					}
 				},
 				"url": {
-					"raw": "https://localhost:7185/desks/update-desks",
+					"raw": "https://localhost:7185/desks",
 					"protocol": "https",
 					"host": [
 						"localhost"
 					],
 					"port": "7185",
 					"path": [
-						"desks",
-						"update-desks"
+						"desks"
 					]
 				}
 			},
@@ -211,7 +207,7 @@
 					}
 				},
 				"url": {
-					"raw": "https://localhost:7185/desks/get-desks-by-filter",
+					"raw": "https://localhost:7185/desks/filter",
 					"protocol": "https",
 					"host": [
 						"localhost"
@@ -219,7 +215,7 @@
 					"port": "7185",
 					"path": [
 						"desks",
-						"get-desks-by-filter"
+						"filter"
 					]
 				}
 			},

@@ -16,7 +16,7 @@ namespace DeskManager.Controllers
         }
 
         //zobezpieczyc - dostep dla zalogowanych
-        [HttpGet("get-desks")]
+        [HttpGet]
         public async Task<IActionResult> GetDesksAsync()
         {
             var availableDesks = await _deskService.GetDesksAsync();
@@ -29,7 +29,7 @@ namespace DeskManager.Controllers
             return Ok(availableDesks);
         }
 
-        [HttpPost("add-desks")]
+        [HttpPost]
         public async Task<IActionResult> AddDesksAsync([FromBody] List<Desk> desks)
         {
             try
@@ -47,25 +47,7 @@ namespace DeskManager.Controllers
             }
         }
 
-        //[HttpDelete("delete-desks")]
-        //public async Task<IActionResult> DeleteDesksAsync([FromBody] List<Desk> desks)
-        //{
-        //    try
-        //    {
-        //        await _deskService.DeleteDesksAsync(desks);
-        //        return Ok("Desks deleted successfully.");
-        //    }
-        //    catch (ArgumentException ex)
-        //    {
-        //        return BadRequest(ex.Message);
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return StatusCode(500, "An unexpected error occurred.");
-        //    }
-        //}
-
-        [HttpDelete("delete-desks")]
+        [HttpDelete]
         public async Task<IActionResult> DeleteDesksAsync([FromQuery] int deskId)
         {
             try
@@ -83,7 +65,7 @@ namespace DeskManager.Controllers
             }
         }
 
-        [HttpPut("update-desks")]
+        [HttpPut]
         public async Task<IActionResult> UpdateDesksAsync([FromBody] List<Desk> desks)
         {
             try
@@ -101,7 +83,7 @@ namespace DeskManager.Controllers
             }
         }
 
-        [HttpPost("get-desks-by-filter")]
+        [HttpPost("filter")]
         public async Task<IActionResult> GetDesksByFilter([FromBody] DeskFilter filter)
         {
             try
