@@ -20,7 +20,8 @@ namespace DeskManager.Controllers
         {
             try
             {
-                return Ok(await _userService.CreateUser(request));
+                await _userService.CreateUser(request);
+                return Ok("User register successfully.");
             }
             catch (ArgumentException ex)
             {

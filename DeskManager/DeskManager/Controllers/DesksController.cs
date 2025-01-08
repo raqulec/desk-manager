@@ -23,7 +23,7 @@ namespace DeskManager.Controllers
 
             if (availableDesks.Count == 0)
             {
-                return NotFound("No available desks.");
+                return NotFound(new { message = "No available desks." });
             }
 
             return Ok(availableDesks);
@@ -35,7 +35,7 @@ namespace DeskManager.Controllers
             try
             {
                 await _deskService.AddDesksAsync(desks);
-                return Ok("Desks added successfully.");
+                return Ok(new { message = "Desks added successfully." });
             }
             catch (ArgumentException ex)
             {
@@ -43,7 +43,10 @@ namespace DeskManager.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(500, "An unexpected error occurred.");
+                return StatusCode(500, new
+                {
+                    message = "An unexpected error occurred."
+                });
             }
         }
 
@@ -53,7 +56,7 @@ namespace DeskManager.Controllers
             try
             {
                 await _deskService.DeleteDesksAsync(deskId);
-                return Ok("Desks deleted successfully.");
+                return Ok(new { message = "Desks deleted successfully." });
             }
             catch (ArgumentException ex)
             {
@@ -61,7 +64,10 @@ namespace DeskManager.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(500, "An unexpected error occurred.");
+                return StatusCode(500, new
+                {
+                    message = "An unexpected error occurred."
+                });
             }
         }
 
@@ -71,7 +77,7 @@ namespace DeskManager.Controllers
             try
             {
                 await _deskService.UpdateDesksAsync(desks);
-                return Ok("Desks updated successfully.");
+                return Ok(new { message = "Desks updated successfully." });
             }
             catch (ArgumentException ex)
             {
@@ -79,7 +85,10 @@ namespace DeskManager.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(500, "An unexpected error occurred.");
+                return StatusCode(500, new
+                {
+                    message = "An unexpected error occurred."
+                });
             }
         }
 
@@ -91,7 +100,10 @@ namespace DeskManager.Controllers
                 var desks = await _deskService.GetDesksByFilter(filter);
 
                 if (!desks.Any())
-                    return NotFound("No desks found.");
+                    return NotFound(new
+                    {
+                        message = "No desks found."
+                    });
 
                 return Ok(desks);
             }
@@ -101,7 +113,10 @@ namespace DeskManager.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(500, "An unexpected error occurred:");
+                return StatusCode(500, new
+                {
+                    message = "An unexpected error occurred:"
+                });
             }
         }
     }
